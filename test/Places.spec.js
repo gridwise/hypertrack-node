@@ -3,13 +3,13 @@
 var hypertrack = require('./testUtils').getSpyableHyperTrack();
 var expect = require('chai').expect;
 
-describe('hub Resource', function() {
+describe('Place Resource', function() {
   describe('retrieve', function() {
     it('Sends the correct request', function() {
-      hypertrack.hubs.retrieve('hubID123');
+      hypertrack.places.retrieve('placeID123');
       expect(hypertrack.LAST_REQUEST).to.deep.equal({
         method: 'GET',
-        url: '/api/v1/hubs/hubID123/',
+        url: '/api/v1/places/placeID123/',
         data: {},
         headers: {},
       });
@@ -18,16 +18,16 @@ describe('hub Resource', function() {
 
   describe('create', function() {
     it('Sends the correct request', function() {
-      hypertrack.hubs.create({
+      hypertrack.places.create({
         action: 'delivery',
-        hub_id: 'hubID123'
+        place_id: 'placeID123'
       });
       expect(hypertrack.LAST_REQUEST).to.deep.equal({
         method: 'POST',
-        url: '/api/v1/hubs/',
+        url: '/api/v1/places/',
         data: {
           action: 'delivery',
-          hub_id: 'hubID123'
+          place_id: 'placeID123'
         },
         headers: {},
       });
@@ -37,10 +37,10 @@ describe('hub Resource', function() {
 
   describe('list', function() {
     it('Sends the correct request', function() {
-      hypertrack.hubs.list();
+      hypertrack.places.list();
       expect(hypertrack.LAST_REQUEST).to.deep.equal({
         method: 'GET',
-        url: '/api/v1/hubs/',
+        url: '/api/v1/places/',
         data: {},
         headers: {},
       });
@@ -49,10 +49,10 @@ describe('hub Resource', function() {
 
   describe('update', function() {
     it('Sends the correct request', function() {
-      hypertrack.hubs.update('hubID123', {action: 'pickup'});
+      hypertrack.places.update('placeID123', {action: 'pickup'});
       expect(hypertrack.LAST_REQUEST).to.deep.equal({
         method: 'PATCH',
-        url: '/api/v1/hubs/hubID123/',
+        url: '/api/v1/places/placeID123/',
         headers: {},
         data: {action: 'pickup'},
       });
@@ -61,10 +61,10 @@ describe('hub Resource', function() {
 
   describe('del', function() {
     it('Sends the correct request', function() {
-      hypertrack.hubs.del('hubID123');
+      hypertrack.places.del('placeID123');
       expect(hypertrack.LAST_REQUEST).to.deep.equal({
         method: 'DELETE',
-        url: '/api/v1/hubs/hubID123/',
+        url: '/api/v1/places/placeID123/',
         headers: {},
         data: {},
       });

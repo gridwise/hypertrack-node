@@ -3,13 +3,13 @@
 var hypertrack = require('./testUtils').getSpyableHyperTrack();
 var expect = require('chai').expect;
 
-describe('Task Resource', function() {
+describe('User Resource', function() {
   describe('retrieve', function() {
     it('Sends the correct request', function() {
-      hypertrack.tasks.retrieve('taskID123');
+      hypertrack.users.retrieve('userID123');
       expect(hypertrack.LAST_REQUEST).to.deep.equal({
         method: 'GET',
-        url: '/api/v1/tasks/taskID123/',
+        url: '/api/v1/users/userID123/',
         data: {},
         headers: {},
       });
@@ -18,16 +18,16 @@ describe('Task Resource', function() {
 
   describe('create', function() {
     it('Sends the correct request', function() {
-      hypertrack.tasks.create({
+      hypertrack.users.create({
         action: 'delivery',
-        destination_id: 'destinationID123'
+        user_id: 'userID123'
       });
       expect(hypertrack.LAST_REQUEST).to.deep.equal({
         method: 'POST',
-        url: '/api/v1/tasks/',
+        url: '/api/v1/users/',
         data: {
           action: 'delivery',
-          destination_id: 'destinationID123'
+          user_id: 'userID123'
         },
         headers: {},
       });
@@ -37,11 +37,11 @@ describe('Task Resource', function() {
 
   describe('list', function() {
     it('Sends the correct request', function() {
-      hypertrack.tasks.list();
+      hypertrack.users.list({page_size: 1});
       expect(hypertrack.LAST_REQUEST).to.deep.equal({
         method: 'GET',
-        url: '/api/v1/tasks/',
-        data: {},
+        url: '/api/v1/users/',
+        data: {page_size: 1},
         headers: {},
       });
     });
@@ -49,48 +49,36 @@ describe('Task Resource', function() {
 
   describe('update', function() {
     it('Sends the correct request', function() {
-      hypertrack.tasks.update('taskID123', {action: 'pickup'});
+      hypertrack.users.update('userID123', {action: 'pickup'});
       expect(hypertrack.LAST_REQUEST).to.deep.equal({
         method: 'PATCH',
-        url: '/api/v1/tasks/taskID123/',
+        url: '/api/v1/users/userID123/',
         headers: {},
         data: {action: 'pickup'},
       });
     });
   });
 
-  describe('complete', function() {
-    it('Sends the correct request', function() {
-      hypertrack.tasks.complete('taskID123', {completion_location: {type: 'Point', coordinates: [72, 19]}});
-      expect(hypertrack.LAST_REQUEST).to.deep.equal({
-        method: 'POST',
-        url: '/api/v1/tasks/taskID123/completed/',
-        headers: {},
-        data: {completion_location: {type: 'Point', coordinates: [72, 19]}},
-      });
-    });
-  });
-
-  describe('cancel', function() {
-    it('Sends the correct request', function() {
-      hypertrack.tasks.cancel('taskID123', {cancelation_time: '2016-03-09T06:00:20.648785Z'});
-      expect(hypertrack.LAST_REQUEST).to.deep.equal({
-        method: 'POST',
-        url: '/api/v1/tasks/taskID123/canceled/',
-        headers: {},
-        data: {cancelation_time: '2016-03-09T06:00:20.648785Z'},
-      });
-    });
-  });
-
   describe('del', function() {
     it('Sends the correct request', function() {
-      hypertrack.tasks.del('taskID123');
+      hypertrack.users.del('userID123');
       expect(hypertrack.LAST_REQUEST).to.deep.equal({
         method: 'DELETE',
-        url: '/api/v1/tasks/taskID123/',
+        url: '/api/v1/users/userID123/',
         headers: {},
         data: {},
+      });
+    });
+  });
+
+  describe('assign_actions', function() {
+    it('Sends the correct request', function() {
+      hypertrack.users.assign_actions('userID123', {'task_ids': ['taskID123']});
+      expect(hypertrack.LAST_REQUEST).to.deep.equal({
+        method: 'POST',
+        url: '/api/v1/users/userID123/assign_actions/',
+        headers: {},
+        data: {'task_ids': ['taskID123']},
       });
     });
   });
