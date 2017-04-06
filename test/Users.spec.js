@@ -73,12 +73,24 @@ describe('User Resource', function() {
 
   describe('assign_actions', function() {
     it('Sends the correct request', function() {
-      hypertrack.users.assign_actions('userID123', {'task_ids': ['taskID123']});
+      hypertrack.users.assign_actions('userID123', {'action_ids': ['actionID123']});
       expect(hypertrack.LAST_REQUEST).to.deep.equal({
         method: 'POST',
         url: '/api/v1/users/userID123/assign_actions/',
         headers: {},
-        data: {'task_ids': ['taskID123']},
+        data: {'action_ids': ['actionID123']},
+      });
+    });
+  });
+
+  describe('stop_tracking', function() {
+    it('Sends the correct request', function() {
+      hypertrack.users.stop_tracking('userID123', {});
+      expect(hypertrack.LAST_REQUEST).to.deep.equal({
+        method: 'POST',
+        url: '/api/v1/users/userID123/stop_tracking/',
+        headers: {},
+        data: {},
       });
     });
   });
