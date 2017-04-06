@@ -26,11 +26,11 @@ var hypertrack = require('hypertrack')('<YOUR HYPERTRACK SECRET KEY>');
 Every resource method accepts an optional callback as the last argument:
 
 ```javascript
-hypertrack.customers.create(
-    { name: 'Tapan Pandita', email: 'support@hypertrack.io' },
-    function(err, customer) {
+hypertrack.users.create(
+    { name: 'Tapan Pandita', phone: '+16502469293' },
+    function(err, user) {
         err; // null if no error occurred
-        customer; // the created customer object
+        user; // the created user object
     }
 );
 ```
@@ -39,18 +39,11 @@ Additionally, every resource method returns a promise, so you don't have to use 
 
 ```javascript
 // Create a new customer and then a new destination for that customer:
-hypertrack.customers.create({
+hypertrack.users.create({
   name: 'Tapan Pandita',
-  email: 'support@hypertrack.io'
-}).then(function(customer) {
-  return hypertrack.destination.create({
-    customer_id: customer.id,
-    address: '270 Linden Street',
-    city: 'San Francisco',
-    country: 'US'
-  });
-}).then(function(destination) {
-  console.log(destination);
+  phone: '+16502469293'
+}).then(function(user) {
+  hypertrack.users.assign_actions(user.id, {"action_ids": ["123e4567-e89b-12d3-a456-426655440000"]})
 }).catch(function(err) {
   // Deal with an error
 });
@@ -59,7 +52,7 @@ hypertrack.customers.create({
 Documentation
 -------------
 
-For detailed documentation of the methods available, please visit the official [HyperTrack API documentation](http://docs.hypertrack.io).
+For detailed documentation of the methods available, please visit the official [HyperTrack API documentation](http://docs.hypertrack.com).
 
 Testing
 -------
